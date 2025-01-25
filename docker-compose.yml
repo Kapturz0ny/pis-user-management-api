@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  postgres_user_management:
+    image: postgres:15-alpine
+    container_name: postgres-user-management
+    environment:
+      POSTGRES_USER: user_management
+      POSTGRES_PASSWORD: user_management_password
+      POSTGRES_DB: user_management_db
+    ports:
+      - "5435:5432"
+    networks:
+      - app-network
+
+  user_management_api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: user_management_api
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres_user_management:5432/user_management_db
+      SPRING_DATASOURCE_USERNAME: user_management
+      SPRING_DATASOURCE_PASSWORD: user_management_password
+      KAFKA_BROKERS: kafka:29092
+      SPRING_KAFKA_BOOTSTRAP-SERVERS: kafka:29092
+      SPRING_KAFKA_PRODUCER_BOOTSTRAP-SERVERS: kafka:29092
+    depends_on:
+      - postgres_user_management
+    ports:
+      - "8005:8005"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+
