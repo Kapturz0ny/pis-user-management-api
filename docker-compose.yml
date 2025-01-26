@@ -13,11 +13,11 @@ services:
     networks:
       - shared-network
 
-  user_management_api:
+  user-management-api:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: user_management_api
+    container_name: user-management-api
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres_user_management:5432/user_management_db
       SPRING_DATASOURCE_USERNAME: user_management
