@@ -1,14 +1,14 @@
 package com.example.user_management_api.entities;
 
 import jakarta.persistence.*;
-import java.time.LocalDate;
 
 @Entity
-public class User {
+//@Table(name = "users")
+public class UserManagement {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long loanId;
+    private Long userId;
 
     private String email;
     private String first_name;
@@ -17,6 +17,9 @@ public class User {
 
     // getters and setters
 
+    public Long getId() {
+        return userId;
+    }
     public String getEmail() {
         return email;
     }
