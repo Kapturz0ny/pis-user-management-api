@@ -32,10 +32,16 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
+    @GetMapping("/")
+    public ResponseEntity<List<UserDTO>> getAllUsers() {
+        List<UserDTO> users = userService.getAllUsers();
+        return ResponseEntity.ok(users);
+    }
+
     @PostMapping("/")
     public ResponseEntity<UserDTO> createBook(@RequestBody CreateUserDTO createUserDTO) {
         UserDTO createdUser = userService.createUser(createUserDTO);
-//        kafkaProducer.sendMessage("POST", createdUser.id());
+        kafkaProducer.sendMessage("POST", createdUser.id());
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
     }
 

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -20,21 +21,23 @@ public class UserService {
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
-//
-//    public List<BookDTO> getBooks(String title, Long categoryId, Long authorId) {
-//        Specification<Book> spec = BookSpecifications.buildSpecification(title, categoryId, authorId);
-//
-//        return bookRepository.findAll(spec).stream()
-//                .map(this::mapToBookDTO)
-//                .toList();
-//    }
-//
+
+    public List<UserDTO> getAllUsers() {
+        List<UserManagement> users = userRepository.findAll();
+        if (users.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No users found");
+        }
+        return users.stream()
+                    .map(this::mapToUserDTO)
+                    .collect(Collectors.toList());
+    }
+
     public UserDTO getUserById(Long id) {
         UserManagement user = userRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User with ID " + id + " not found"));
         return mapToUserDTO(user);
     }
-//
+
     public UserDTO createUser(CreateUserDTO userDTO) {
 
         // Map DTO to entity
