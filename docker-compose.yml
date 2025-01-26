@@ -11,7 +11,7 @@ services:
     ports:
       - "5439:5432"
     networks:
-      - app-network
+      - shared-network
 
   user_management_api:
     build:
@@ -30,8 +30,9 @@ services:
     ports:
       - "8009:8009"
     networks:
-      - app-network
+      - shared-network
 
 networks:
-  app-network:
+  shared-network:
+    external: true
 
