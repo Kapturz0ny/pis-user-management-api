@@ -24,9 +24,7 @@ public class UserService {
 
     public List<UserDTO> getAllUsers() {
         List<UserManagement> users = userRepository.findAll();
-        if (users.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No users found");
-        }
+
         return users.stream()
                     .map(this::mapToUserDTO)
                     .collect(Collectors.toList());
