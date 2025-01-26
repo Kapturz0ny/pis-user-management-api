@@ -9,7 +9,7 @@ services:
       POSTGRES_PASSWORD: user_management_password
       POSTGRES_DB: user_management_db
     ports:
-      - "5435:5432"
+      - "5439:5432"
     networks:
       - app-network
 
@@ -28,7 +28,7 @@ services:
     depends_on:
       - postgres_user_management
     ports:
-      - "8005:8005"
+      - "8009:8009"
     networks:
       - app-network
 
